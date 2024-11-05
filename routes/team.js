@@ -13,4 +13,15 @@ router.get('/swap', async function(req, res, next) {
   }
 });
 
+/* GET users */
+router.get('/timeout', async function(req, res, next) {
+  try {
+    console.error(`Timeout Team`);
+    res.json(await team.timeOut(req.user.userId));
+  } catch (err) {
+    console.error(`Error while timing out team `, err.message);
+    next(err);
+  }
+});
+
 module.exports = router;

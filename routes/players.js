@@ -24,8 +24,7 @@ router.post('/login', async function(req, res, next) {
 
     res.json(await players.login(username, password));
   } catch (err) {
-    console.error(`Wrong username or password`, err.message);
-    next(err);
+    res.status(401).send('Wrong username/password')
   }
 });
 

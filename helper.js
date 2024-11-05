@@ -8,7 +8,7 @@ function emptyOrRows(rows) {
 
   async function getTeam(userId, db) {
     const rows = await db.query(
-        `SELECT team.ID, type.ID AS typeID, type.Type AS typeName, opponent.ID AS opponentID,
+        `SELECT team.ID, type.ID AS typeID, type.Type AS typeName, opponent.ID AS opponentID, team.Balance AS teamBalance, team.TimeOut AS timeout,
         JSON_OBJECT(
             'id', card.ID,
             'description', card.Description,

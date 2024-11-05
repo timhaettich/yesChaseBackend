@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var playersRouter = require('./routes/players');
@@ -10,16 +11,23 @@ var cardsRouter = require('./routes/cards');
 var teamRouter = require('./routes/team');
 var transportRouter = require('./routes/transport');
 var gpsRouter = require('./routes/gps');
-var automaticSwap = require('./services/automaticSwap')
+var automaticSwap = require('./services/automaticSwap');
 
-var auth = require('./auth')
+var auth = require('./auth');
 
 var app = express();
+
+const corsOptions = {
+  origin: '*', // Allow your frontend URL
+  methods: 'GET,POST,PUT,DELETE',  // Specify the HTTP methods you want to allow
+  allowedHeaders: 'Content-Type,Authorization',  // Allow specific headers
+};
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(cors(corsOptions))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

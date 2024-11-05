@@ -31,8 +31,37 @@ async function ride(travelTime, travelModeId, userId){
     VALUES (NOW(), ?, ?, ?)`,
     [price, travelModeId, team.ID]
   );
+
+
+  const result = await db.query(
+    `SELECT Balance
+    FROM Team
+    WHERE ID = ?
+    LIMIT 1`,
+    [team.ID]
+  )
+
+  const balance = result[0].Balance
+
+  return {balance}
+
+}
+
+async function list() {
+  const rows = await db.query(
+    `SELECT ID, Name, Cost, AllowTimeout
+    FROM Transport`
+  );
+
+  // Parse the Logs field if it's returned as a string
+  const data = helper.emptyOrRows(rows);
+
+  return {
+    data
+  };
 }
 
 module.exports = {
-  ride
+  ride,
+  list
 }
